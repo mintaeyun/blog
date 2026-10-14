@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>설정 | AI 업무 학습 일지</title>
+  <meta name="description" content="카테고리와 소개 내용을 관리하는 관리자 전용 설정 페이지입니다.">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" integrity="sha384-/uC/GIvKJ/9RN6i1izHoBY9ubYo60OAsQRNQ3NRFiNsN+N/MVQJHD5OYcZz6wvwn" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde@2.21.0/dist/easymde.min.css" integrity="sha384-ZoLYv3S+AsZX+zhbN1D1+WPpc8f+DmLfxfgw+qn0Nq8wJPOYQQXEW5ZrRhcGozlG" crossorigin="anonymous">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/css/settings.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.js" integrity="sha384-2vpGtuKqJvFlwJqYnf/wUMuzUfhUnYBt9oay0e2yaFcq0Dh6/aEbQ8YAOeKGzlYo" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js" integrity="sha384-a7SzOxErzJ3ZpQz0zJ32d67dSitNzPcbfybc/ykU9KJhMgZkwqfSxlhhdJRS+XGL" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/easymde@2.21.0/dist/easymde.min.js" integrity="sha384-mTM6vzy+/UiHrMBClNGViM9qEv0/26iCGqpJKhSzdnjrxbKjO3vkT62ujXQ8B5iv" crossorigin="anonymous" defer></script>
+  <script type="module" src="/js/settings.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문 바로가기</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a href="/" class="logo">
+        <span class="logo__en" aria-hidden="true">AI WORK STUDY LOG</span>
+        <span class="logo__ko">AI 업무 학습 일지</span>
+      </a>
+      <button type="button" class="icon-btn nav-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="site-nav">☰</button>
+      <nav id="site-nav" class="site-nav" aria-label="주 메뉴">
+        <a href="/" data-path="/">글 목록</a>
+        <a href="/about" data-path="/about">소개</a>
+        <a href="/write" data-path="/write" data-admin-only hidden>글쓰기</a>
+        <a href="/settings" data-path="/settings" data-admin-only hidden>설정</a>
+        <div class="auth">
+          <span id="auth-user" class="auth__user" hidden></span>
+          <button type="button" id="auth-btn" class="btn btn--secondary btn--sm" hidden>로그인</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <div id="config-banner" class="config-banner" hidden>
+    <p class="notice notice--warn">Firebase 설정이 필요합니다. js/config.js에 설정값을 넣으면 글을 불러오고 저장할 수 있습니다.</p>
+  </div>
+
+  <main id="main" class="page">
+    <div id="message" class="message-area" aria-live="polite"></div>
+
+    <div data-guard hidden>
+      <div class="container container--narrow settings">
+        <header class="page-head">
+          <span class="eyebrow" aria-hidden="true">SETTINGS</span>
+          <h1 class="h1">설정</h1>
+        </header>
+
+        <div class="tabs settings-tabs" role="tablist" aria-label="설정 섹션">
+          <button type="button" class="tab" role="tab" id="tab-categories" aria-controls="panel-categories" aria-selected="true" data-section="categories">카테고리 관리</button>
+          <button type="button" class="tab" role="tab" id="tab-profile" aria-controls="panel-profile" aria-selected="false" tabindex="-1" data-section="profile">소개 관리</button>
+        </div>
+
+        <!-- 카테고리 관리 (P-05-2 ~ P-05-9) -->
+        <section class="settings-panel" role="tabpanel" id="panel-categories" aria-labelledby="tab-categories" tabindex="0">
+          <h2 class="h2">카테고리 관리</h2>
+          <p class="page-head__desc">글을 분류할 카테고리를 관리합니다. 여기서 정한 순서가 글 목록 탭과 글쓰기 선택 목록에 그대로 적용됩니다.</p>
+
+          <form id="category-add-form" class="field category-add" novalidate>
+            <label class="sr-only" for="category-new-name">새 카테고리 이름</label>
+            <div class="field__inline">
+              <input type="text" id="category-new-name" class="input" maxlength="40" autocomplete="off" placeholder="새 카테고리 이름 (최대 20자)" aria-describedby="category-new-error">
+              <button type="submit" id="category-add-btn" class="btn btn--primary btn--sm">추가</button>
+            </div>
+            <p id="category-new-error" class="field__error" hidden></p>
+          </form>
+
+          <div id="category-list-area" class="category-list-area">
+            <p class="loading">불러오는 중…</p>
+          </div>
+
+          <p class="field__help category-note">'미분류'는 카테고리가 없는 글을 뜻하며, 이름을 바꾸거나 삭제할 수 없습니다.</p>
+        </section>
+
+        <!-- 소개 관리 (P-05-10 ~ P-05-18) -->
+        <section class="settings-panel" role="tabpanel" id="panel-profile" aria-labelledby="tab-profile" tabindex="0" hidden>
+          <h2 class="h2">소개 관리</h2>
+          <p class="page-head__desc">소개 페이지에 보일 내용을 편집합니다. 누구나 볼 수 있는 공개 페이지입니다.</p>
+
+          <p class="notice notice--warn profile-privacy">⚠️ 전화번호, 집 주소, 회사 내부 정보 같은 개인정보는 넣지 마세요. 이메일은 스팸이 올 수 있으니 필요할 때만 넣으세요.</p>
+
+          <form id="profile-form" class="form profile-form" novalidate>
+            <p id="profile-loading" class="loading">불러오는 중…</p>
+
+            <div class="field">
+              <label class="field__label" for="profile-name">이름<span class="req" aria-hidden="true">*</span><span class="sr-only"> (필수)</span></label>
+              <input type="text" id="profile-name" class="input" autocomplete="off" placeholder="예: 홍길동" required aria-required="true" aria-describedby="profile-name-help profile-name-error">
+              <p id="profile-name-help" class="field__help">최대 30자</p>
+              <p id="profile-name-error" class="field__error" hidden></p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="profile-headline">한 줄 소개</label>
+              <input type="text" id="profile-headline" class="input" autocomplete="off" placeholder="예: AI로 일하는 방식을 실험하는 개발자" aria-describedby="profile-headline-help profile-headline-error">
+              <p id="profile-headline-help" class="field__help">최대 60자</p>
+              <p id="profile-headline-error" class="field__error" hidden></p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="profile-avatar">프로필 사진 주소</label>
+              <input type="url" id="profile-avatar" class="input" autocomplete="off" inputmode="url" placeholder="https://…" aria-describedby="profile-avatar-help profile-avatar-error">
+              <p id="profile-avatar-help" class="field__help">https://로 시작하는 이미지 주소. 비워 두면 이름 첫 글자로 표시합니다. (GitHub 프로필 사진 주소 추천: https://github.com/{아이디}.png)</p>
+              <p id="profile-avatar-error" class="field__error" hidden></p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="profile-bio">자기소개</label>
+              <textarea id="profile-bio" class="input" rows="8" placeholder="하는 일, 관심사, 블로그를 쓰는 이유를 적어 보세요" aria-describedby="profile-bio-help profile-bio-error"></textarea>
+              <div class="profile-bio-meta">
+                <p id="profile-bio-help" class="field__help">마크다운 사용 가능</p>
+                <p id="profile-bio-count" class="field__count" aria-live="polite">0 / 5,000자</p>
+              </div>
+              <p id="profile-bio-error" class="field__error" hidden></p>
+            </div>
+
+            <div class="field" id="profile-skills-field"></div>
+
+            <div class="field" id="profile-tools-field"></div>
+
+            <div class="field" id="profile-interests-field"></div>
+
+            <div class="field" id="profile-links-field"></div>
+
+            <div class="field">
+              <label class="switch" for="profile-show-stats">
+                <input type="checkbox" id="profile-show-stats" role="switch" checked aria-describedby="profile-show-stats-help">
+                <span>소개 페이지에 학습 현황 표시</span>
+              </label>
+              <p id="profile-show-stats-help" class="field__help">글 수·최근 글을 자동으로 보여 줍니다.</p>
+            </div>
+
+            <div class="btn-row btn-row--end btn-row--stack-mobile profile-actions">
+              <a id="profile-view-link" class="text-link" href="/about" hidden>소개 페이지 보기</a>
+              <button type="submit" id="profile-save-btn" class="btn btn--primary">저장</button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div>
+        <p class="logo__ko">AI 업무 학습 일지</p>
+        <p>업무에 AI를 적용하며 배운 것을 기록합니다.</p>
+      </div>
+      <nav class="site-footer__nav" aria-label="바닥 메뉴">
+        <a href="/">글 목록</a>
+        <a href="/about">소개</a>
+      </nav>
+      <p class="site-footer__copy">© <span id="footer-year">2026</span> <span id="footer-owner"></span>AI 업무 학습 일지</p>
+    </div>
+  </footer>
+</body>
+</html>

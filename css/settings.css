@@ -1,0 +1,58 @@
+/* 설정 페이지 전용 (Design.md 7-5) — 공통 토큰만 사용 */
+
+.settings-tabs { margin-bottom: var(--space-12); }
+
+.settings-panel:focus-visible { outline-offset: 8px; }
+.settings-panel > .page-head__desc { margin-bottom: var(--space-8); }
+
+/* ---------- 카테고리 관리 ---------- */
+.category-add { margin-bottom: var(--space-8); }
+
+.category-row {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-3) 0;
+}
+.category-row__info { flex: 1 1 180px; min-width: 0; }
+.category-row__name { font-weight: 500; }
+.category-row__count { font-size: 14px; color: var(--text-muted); white-space: nowrap; }
+.category-row__count::before { content: "·"; margin: 0 var(--space-2); }
+.category-row__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); }
+.category-row__actions .btn--sm { padding: 0 var(--space-4); }
+.category-row__actions .btn + .btn { margin-left: var(--space-1); }
+
+.category-row--editing { display: grid; gap: var(--space-2); }
+
+.category-empty { padding: var(--space-12) 0; text-align: center; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.category-note { margin-top: var(--space-4); }
+
+/* ---------- 소개 관리 ---------- */
+.profile-privacy { margin-bottom: var(--space-8); }
+
+.profile-bio-meta { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); }
+.profile-bio-meta .field__count { margin-left: auto; }
+
+.profile-tags { margin-top: var(--space-2); }
+
+.profile-rows { display: grid; gap: var(--space-3); }
+.profile-row {
+  display: grid; grid-template-columns: 1fr auto; align-items: start;
+  gap: 0 var(--space-2);
+}
+.profile-row__inputs { display: grid; gap: var(--space-1) var(--space-4); min-width: 0; }
+.profile-row__actions { display: flex; align-items: center; }
+.profile-row__error { grid-column: 1 / -1; }
+#profile-tools-field .profile-row__inputs { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+#profile-links-field .profile-row__inputs { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+
+.profile-rows__foot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); margin-top: var(--space-2); }
+
+.profile-actions { align-items: center; gap: var(--space-6); margin-top: var(--space-4); }
+
+@media (max-width: 640px) {
+  .category-row__actions { width: 100%; justify-content: flex-end; }
+  #profile-tools-field .profile-row__inputs,
+  #profile-links-field .profile-row__inputs { grid-template-columns: 1fr; }
+  .profile-row { padding-bottom: var(--space-3); border-bottom: 1px solid var(--line); }
+  .profile-actions .text-link { align-self: center; }
+}

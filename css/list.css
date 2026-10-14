@@ -1,0 +1,19 @@
+/* 글 목록 (P-01) 전용 — Design.md 6-8, 7-1 */
+
+/* 자기소개 카드 */
+.intro-slot { margin-bottom: var(--space-16); }
+.intro-card { display: flex; align-items: center; gap: var(--space-6); }
+.intro-card__body { flex: 1; min-width: 0; }
+.intro-card__headline { margin-top: var(--space-1); color: var(--text-muted); }
+.intro-card__more { flex: none; }
+
+@media (max-width: 640px) {
+  .intro-card { flex-direction: column; text-align: center; gap: var(--space-4); }
+}
+
+/* 글 개수 줄 */
+.list-count { margin: var(--space-4) 0 var(--space-8); }
+.list-count:empty { display: none; }
+
+.empty__actions { justify-content: center; }
+.empty__actions:empty { display: none; }

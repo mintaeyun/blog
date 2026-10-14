@@ -1,0 +1,19 @@
+/* 글쓰기 · 글 수정 (Design 6-4, 7-3) — style.css를 보완하는 것만 */
+
+/* 버튼 줄은 본문과 48px 띄운다 (폼 간격 32px + 16px) */
+.post-form__actions { margin-top: var(--space-4); }
+
+/* 카테고리 줄: 선택칸이 남는 폭을 채우고, 링크·새로고침 버튼은 줄바꿈돼도 함께 */
+.post-form .field__inline > select.input { flex: 1 1 160px; min-width: 0; }
+.post-form .field__inline .text-link { white-space: nowrap; }
+
+/* 편집기 — 최소 높이 400px, 오류 시 테두리 빨강 */
+.field--editor .EasyMDEContainer { min-width: 0; }
+.field--editor .EasyMDEContainer .CodeMirror { min-height: 400px; }
+.field--invalid .EasyMDEContainer .CodeMirror,
+.field--invalid .editor-toolbar { border-color: var(--danger); }
+
+
+/* 불러오기 실패·없는 글 화면 */
+.post-retry { justify-content: center; }
+.empty__title { margin-bottom: var(--space-3); }
