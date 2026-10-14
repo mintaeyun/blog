@@ -234,7 +234,8 @@ export function errorMessage(err, fallback = "요청을 처리하지 못했습�
   if (code.endsWith("permission-denied")) return "권한이 없습니다. 다시 로그인해 주세요.";
   if (code.endsWith("unavailable") || code === "auth/network-request-failed") return "인터넷 연결을 확인한 뒤 다시 시도해 주세요.";
   if (code === "auth/popup-blocked") return "로그인 창이 차단되었습니다. 브라우저에서 팝업을 허용한 뒤 다시 시도해 주세요.";
-  if (code.startsWith("auth/")) return "로그인하지 못했습니다. 다시 시도해 주세요.";
+  if (code === "auth/unauthorized-domain") return `이 주소(${location.hostname})는 로그인이 허용되지 않았습니다. Firebase 콘솔 > Authentication > 설정 > 승인된 도메인에 추가해 주세요.`;
+  if (code.startsWith("auth/")) return `로그인하지 못했습니다. 다시 시도해 주세요. (${code})`;
   return fallback;
 }
 
